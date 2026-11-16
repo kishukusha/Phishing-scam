@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>メッセージの安全確認</title>
+<title>メッセージ</title>
 
 <style>
 * {
@@ -13,20 +13,21 @@
 
 body {
     margin: 0;
-    padding: 20px;
-    min-height: 100vh;
-    background: #f2f2f7;
-    color: #1d1d1f;
+    background: #dce5e3;
+    color: #222;
     font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
                  "Yu Gothic", sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-.container {
+.phone {
     width: 100%;
-    max-width: 430px;
+    max-width: 480px;
+    min-height: 100vh;
+    margin: 0 auto;
+    background: #8cabd0;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
 .screen {
@@ -34,83 +35,211 @@ body {
 }
 
 .screen.active {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-.card {
-    background: white;
-    border-radius: 24px;
-    padding: 25px 22px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-}
+/* LINE風ヘッダー */
 
-h1 {
-    font-size: 23px;
-    text-align: center;
-    margin: 8px 0 18px;
-}
-
-.description {
-    color: #6e6e73;
-    font-size: 14px;
-    line-height: 1.8;
-    text-align: center;
-}
-
-.phone-header {
-    text-align: center;
-    color: #777;
-    font-size: 13px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
-}
-
-.message {
-    background: #e5e5ea;
-    border-radius: 18px;
-    padding: 17px;
-    margin: 22px 0;
-    font-size: 15px;
-    line-height: 1.8;
-}
-
-.message-time {
-    text-align: center;
+.status-bar {
+    height: 27px;
+    background: #06c755;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 17px;
     font-size: 12px;
-    color: #999;
-    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.chat-header {
+    height: 58px;
+    background: #06c755;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 13px;
+    gap: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.back {
+    font-size: 27px;
+    font-weight: 300;
+}
+
+.header-name {
+    flex: 1;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.header-icons {
+    font-size: 21px;
+    letter-spacing: 8px;
+}
+
+/* トーク画面 */
+
+.chat-area {
+    flex: 1;
+    padding: 18px 12px 25px;
+    background-color: #8cabd0;
+    background-image:
+        radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px);
+    background-size: 22px 22px;
+}
+
+.date-label {
+    text-align: center;
+    margin: 5px auto 22px;
+    width: fit-content;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: rgba(60,80,100,0.35);
+    color: white;
+    font-size: 12px;
+}
+
+.message-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.avatar {
+    width: 39px;
+    height: 39px;
+    border-radius: 50%;
+    background: #e7e7e7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 21px;
+    flex-shrink: 0;
+    border: 1px solid rgba(0,0,0,0.08);
+}
+
+.message-content {
+    max-width: 82%;
+}
+
+.sender-name {
+    color: #26394c;
+    font-size: 12px;
+    margin: 0 0 5px 3px;
+}
+
+.bubble {
+    position: relative;
+    background: white;
+    border-radius: 4px 17px 17px 17px;
+    padding: 13px 15px;
+    font-size: 15px;
+    line-height: 1.75;
+    overflow-wrap: anywhere;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+
+.bubble strong {
+    font-size: 15px;
+}
+
+.time {
+    display: inline-block;
+    color: #34485c;
+    font-size: 10px;
+    margin-left: 5px;
+    align-self: flex-end;
+    white-space: nowrap;
 }
 
 .fake-link {
-    color: #007aff;
+    display: block;
+    margin-top: 12px;
+    padding: 11px;
+    background: #f3f5f7;
+    border-radius: 9px;
+    color: #0878d1;
     text-decoration: underline;
     overflow-wrap: anywhere;
+    font-size: 13px;
+}
+
+/* 下部入力欄 */
+
+.input-area {
+    min-height: 57px;
+    background: #f7f7f7;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-top: 1px solid #ddd;
+}
+
+.input-plus {
+    font-size: 25px;
+    color: #555;
+}
+
+.input-fake {
+    flex: 1;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 22px;
+    padding: 9px 14px;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.input-icon {
+    font-size: 21px;
+    color: #555;
+}
+
+/* 選択ボタン */
+
+.choice-area {
+    background: #f7f7f7;
+    padding: 12px 15px 18px;
+    border-top: 1px solid #ddd;
+}
+
+.choice-title {
+    font-size: 13px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 7px;
 }
 
 button {
     width: 100%;
-    padding: 16px;
-    margin-top: 12px;
+    padding: 14px;
+    margin-top: 8px;
     border: none;
-    border-radius: 14px;
-    font-size: 16px;
+    border-radius: 12px;
+    font-size: 15px;
     font-weight: 700;
     cursor: pointer;
 }
 
 button:focus-visible {
-    outline: 3px solid #1d1d1f;
+    outline: 3px solid #222;
     outline-offset: 3px;
 }
 
 .primary {
-    background: #007aff;
+    background: #06c755;
     color: white;
 }
 
 .secondary {
     background: #e5e5ea;
-    color: #1d1d1f;
+    color: #222;
 }
 
 .danger {
@@ -118,12 +247,40 @@ button:focus-visible {
     color: white;
 }
 
+/* 偽サイト・解説 */
+
+.simple-screen {
+    flex: 1;
+    background: #f2f2f7;
+    padding: 22px 18px;
+}
+
+.simple-card {
+    background: white;
+    border-radius: 20px;
+    padding: 23px 19px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+}
+
+h1 {
+    font-size: 23px;
+    text-align: center;
+    margin: 10px 0 18px;
+}
+
+.description {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.8;
+    text-align: center;
+}
+
 .site-header {
     text-align: center;
-    padding: 15px;
+    padding: 17px;
     background: #f5f5f7;
-    border-radius: 15px;
-    margin: 20px 0;
+    border-radius: 14px;
+    margin: 18px 0;
 }
 
 .site-icon {
@@ -132,45 +289,25 @@ button:focus-visible {
 
 .fake-site {
     border: 1px solid #ddd;
-    border-radius: 16px;
-    padding: 18px;
-    margin: 20px 0;
+    border-radius: 15px;
+    padding: 16px;
+    margin: 18px 0;
 }
 
 .fake-field {
     background: #f5f5f7;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 9px;
     padding: 14px;
     margin: 12px 0;
     color: #777;
     font-size: 14px;
 }
 
-.lesson-icon {
-    font-size: 55px;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.lesson-box {
-    background: #f5f5f7;
-    border-radius: 15px;
-    padding: 16px;
-    margin: 17px 0;
-    font-size: 14px;
-    line-height: 1.8;
-}
-
-.lesson-box h2 {
-    font-size: 17px;
-    margin-top: 0;
-}
-
 .safe-box {
     background: #e8f4ff;
     color: #0055a4;
-    border-radius: 14px;
+    border-radius: 13px;
     padding: 15px;
     font-size: 14px;
     line-height: 1.8;
@@ -180,11 +317,30 @@ button:focus-visible {
 .warning-box {
     background: #fff1f0;
     color: #b42318;
-    border-radius: 14px;
+    border-radius: 13px;
     padding: 15px;
     font-size: 14px;
     line-height: 1.8;
     margin: 18px 0;
+}
+
+.lesson-box {
+    background: #f5f5f7;
+    border-radius: 14px;
+    padding: 16px;
+    margin: 16px 0;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.lesson-box h2 {
+    font-size: 17px;
+    margin-top: 0;
+}
+
+.lesson-icon {
+    font-size: 52px;
+    text-align: center;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -199,42 +355,73 @@ button:focus-visible {
 
 <body>
 
-<div class="container">
+<div class="phone">
 
-    <!-- 画面1：メッセージ受信 -->
+    <!-- 画面1：LINE風トーク画面 -->
     <section id="message" class="screen active">
-        <div class="card">
 
-            <div class="phone-header">
-                メッセージ
+        <div class="status-bar">
+            <span>12:30</span>
+            <span>●●●　Wi-Fi　🔋</span>
+        </div>
+
+        <div class="chat-header">
+            <span class="back">‹</span>
+            <div class="header-name">長〇部　覚</div>
+            <div class="header-icons">⌕ ☎</div>
+        </div>
+
+        <div class="chat-area">
+
+            <div class="date-label">今日</div>
+
+            <div class="message-row">
+
+                <div class="avatar">👤</div>
+
+                <div class="message-content">
+
+                    <div class="sender-name">長〇部　覚</div>
+
+                    <div class="bubble">
+
+                        <strong>【重要】アカウントのお知らせ</strong>
+                        <br><br>
+
+                        お客様のアカウントに問題が確認されました。
+                        <br><br>
+
+                        本日中に確認しないと、アカウントが利用できなくなる可能性があります。
+                        <br><br>
+
+                        下のページから、すぐに確認してください。
+
+                        <button class="fake-link"
+                                onclick="showFakeSite()">
+                            https://account-check.example.invalid
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <span class="time">10:15</span>
+
             </div>
 
-            <h1>📱 新しいメッセージ</h1>
+        </div>
 
-            <p class="description">
-                あなたのスマートフォンに<br>
-                メッセージが届きました。
-            </p>
+        <div class="input-area">
+            <span class="input-plus">＋</span>
+            <div class="input-fake">Aa</div>
+            <span class="input-icon">☺</span>
+            <span class="input-icon">🎤</span>
+        </div>
 
-            <div class="message-time">
-                今日 10:15
-            </div>
-
-            <div class="message">
-                <strong>【重要】アカウントのお知らせ</strong>
-                <br><br>
-                お客様のアカウントに問題が確認されました。<br><br>
-                本日中に確認しないと、アカウントが利用できなくなる可能性があります。<br><br>
-                下のページから、すぐに確認してください。
-                <br><br>
-                <span class="fake-link">
-                    https://account-check.example.invalid
-                </span>
-            </div>
-
-            <p class="description">
+        <div class="choice-area">
+            <div class="choice-title">
                 あなたなら、どうしますか？
-            </p>
+            </div>
 
             <button class="primary" onclick="showFakeSite()">
                 リンクを開く
@@ -243,129 +430,180 @@ button:focus-visible {
             <button class="secondary" onclick="showSafeChoice()">
                 開かずに削除する
             </button>
-
         </div>
+
     </section>
 
 
     <!-- 画面2：偽サイト -->
     <section id="fakeSite" class="screen">
-        <div class="card">
 
-            <h1>アカウント確認</h1>
+        <div class="status-bar">
+            <span>12:30</span>
+            <span>●●●　Wi-Fi　🔋</span>
+        </div>
 
-            <div class="site-header">
-                <div class="site-icon">🔐</div>
-                <strong>アカウント管理センター</strong>
-            </div>
+        <div class="chat-header">
+            <span class="back" onclick="showScreen('message')">‹</span>
+            <div class="header-name">ページを開いています</div>
+        </div>
 
-            <div class="warning-box">
-                ⚠️ アカウントに問題が発生しています。<br>
-                続けるにはログインして確認してください。
-            </div>
+        <div class="simple-screen">
 
-            <div class="fake-site">
+            <div class="simple-card">
 
-                <strong>本人確認が必要です</strong>
+                <h1>アカウント確認</h1>
 
-                <div class="fake-field">
-                    IDを入力してください
+                <div class="site-header">
+                    <div class="site-icon">🔐</div>
+                    <strong>アカウント管理センター</strong>
                 </div>
 
-                <div class="fake-field">
-                    パスワードを入力してください
+                <div class="warning-box">
+                    ⚠️ アカウントに問題が発生しています。<br>
+                    続けるにはログインして確認してください。
                 </div>
 
-                <p style="font-size:12px;color:#777;line-height:1.6;">
-                    ※これは学習用の偽サイト画面です。実際の入力欄ではありません。
-                </p>
+                <div class="fake-site">
 
-                <button class="danger" onclick="showLesson()">
-                    ログインして確認する
+                    <strong>本人確認が必要です</strong>
+
+                    <div class="fake-field">
+                        IDを入力してください
+                    </div>
+
+                    <div class="fake-field">
+                        パスワードを入力してください
+                    </div>
+
+                    <p style="font-size:12px;color:#777;line-height:1.6;">
+                        ※学習用の画面です。入力欄は実際には動作しません。
+                    </p>
+
+                    <button class="danger" onclick="showLesson()">
+                        ログインして確認する
+                    </button>
+
+                </div>
+
+                <button class="secondary" onclick="showLesson()">
+                    やっぱりやめる
                 </button>
 
             </div>
 
-            <button class="secondary" onclick="showLesson()">
-                やっぱりやめる
-            </button>
-
         </div>
+
     </section>
 
 
     <!-- 画面3：安全な選択 -->
     <section id="safeChoice" class="screen">
-        <div class="card">
 
-            <div class="lesson-icon">👍</div>
+        <div class="status-bar">
+            <span>12:30</span>
+            <span>●●●　Wi-Fi　🔋</span>
+        </div>
 
-            <h1>安全な行動です！</h1>
+        <div class="chat-header">
+            <span class="back" onclick="showScreen('message')">‹</span>
+            <div class="header-name">長〇部　覚</div>
+        </div>
 
-            <p class="description">
-                怪しいメッセージのリンクを開かずに、
-                削除することは大切な行動です。
-            </p>
+        <div class="simple-screen">
 
-            <div class="safe-box">
-                メッセージが本物か分からないときは、リンクを押さずに先生や職員に相談しましょう。
+            <div class="simple-card">
+
+                <div class="lesson-icon">👍</div>
+
+                <h1>安全な行動です！</h1>
+
+                <p class="description">
+                    怪しいメッセージのリンクを開かずに、
+                    削除することは大切な行動です。
+                </p>
+
+                <div class="safe-box">
+                    メッセージが本物か分からないときは、
+                    リンクを押さずに先生や職員に相談しましょう。
+                </div>
+
+                <button class="primary" onclick="showLesson()">
+                    解説を見る
+                </button>
+
             </div>
 
-            <button class="primary" onclick="showLesson()">
-                解説を見る
-            </button>
-
         </div>
+
     </section>
 
 
     <!-- 画面4：学習・解説 -->
     <section id="lesson" class="screen">
-        <div class="card">
 
-            <div class="lesson-icon">🛡️</div>
+        <div class="status-bar">
+            <span>12:30</span>
+            <span>●●●　Wi-Fi　🔋</span>
+        </div>
 
-            <h1>これは学習用の体験です</h1>
+        <div class="chat-header">
+            <span class="back" onclick="showScreen('message')">‹</span>
+            <div class="header-name">学習のまとめ</div>
+        </div>
 
-            <p class="description">
-                このメッセージは、詐欺メッセージを体験するためのものです。
-            </p>
+        <div class="simple-screen">
 
-            <div class="safe-box">
-                <strong>安心してください。</strong><br>
-                本物のアカウントには接続していません。IDやパスワードも入力・取得・保存・送信していません。
+            <div class="simple-card">
+
+                <div class="lesson-icon">🛡️</div>
+
+                <h1>これは学習用の体験です</h1>
+
+                <p class="description">
+                    このメッセージは、詐欺メッセージを体験するためのものです。
+                </p>
+
+                <div class="safe-box">
+                    <strong>安心してください。</strong><br>
+                    本物のアカウントには接続していません。
+                    IDやパスワードも入力・取得・保存・送信していません。
+                </div>
+
+                <div class="lesson-box">
+                    <h2>どこが怪しかった？</h2>
+                    <ul>
+                        <li>「重要」「すぐに」など、急がせている</li>
+                        <li>アカウントが使えなくなると不安にさせている</li>
+                        <li>知らないリンクへ誘導している</li>
+                        <li>IDやパスワードを入力させようとしている</li>
+                    </ul>
+                </div>
+
+                <div class="lesson-box">
+                    <h2>安全に行動するには？</h2>
+                    <ul>
+                        <li>あわててリンクを押さない</li>
+                        <li>知らないサイトに情報を入力しない</li>
+                        <li>公式アプリや公式サイトから確認する</li>
+                        <li>困ったら先生や職員に相談する</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <strong>覚えておこう！</strong><br>
+                    「急いでください」と書かれていても、
+                    あわてて操作しないことが大切です。
+                </div>
+
+                <button class="primary" onclick="showScreen('message')">
+                    もう一度体験する
+                </button>
+
             </div>
-
-            <div class="lesson-box">
-                <h2>どこが怪しかった？</h2>
-                <ul>
-                    <li>「重要」「すぐに」など、急がせている</li>
-                    <li>アカウントが使えなくなると不安にさせている</li>
-                    <li>知らないリンクへ誘導している</li>
-                    <li>IDやパスワードを入力させようとしている</li>
-                </ul>
-            </div>
-
-            <div class="lesson-box">
-                <h2>安全に行動するには？</h2>
-                <ul>
-                    <li>あわててリンクを押さない</li>
-                    <li>知らないサイトに情報を入力しない</li>
-                    <li>公式アプリや自分で調べた公式サイトから確認する</li>
-                    <li>困ったら先生や職員に相談する</li>
-                </ul>
-            </div>
-
-            <div class="warning-box">
-                <strong>覚えておこう！</strong><br>
-                「急いでください」「今すぐ確認してください」と書かれていても、あわてて操作しないことが大切です。
-            </div>
-
-            <button class="primary" onclick="showScreen('message')">
-                もう一度体験する
-            </button>
 
         </div>
+
     </section>
 
 </div>
