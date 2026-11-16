@@ -3,257 +3,557 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ADVENTURE WORLD</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#101522;color:white;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-.phone{max-width:430px;min-height:100vh;margin:auto;background:#172238;padding-bottom:75px;overflow:hidden}
-.header{height:68px;background:#101827;display:flex;align-items:center;padding:0 12px;gap:10px;border-bottom:1px solid #526078}
-.profile{width:43px;height:43px;border-radius:50%;background:linear-gradient(135deg,#d8c6a4,#536b91);display:flex;align-items:center;justify-content:center;font-size:25px;border:2px solid #d8c18c}
-.header-title{flex:1}
-.header-title strong{font-size:15px}
-.header-title small{display:block;color:#aab8ce;font-size:11px;margin-top:3px}
-.online{color:#6ee6a1;font-size:11px}
-.header-icons{font-size:22px;display:flex;gap:12px}
-.game-scene{height:230px;position:relative;overflow:hidden;background:linear-gradient(#4386bb 0%,#9bc5d5 52%,#6b806e 53%,#364e45 100%)}
-.sun{position:absolute;right:45px;top:25px;width:50px;height:50px;border-radius:50%;background:#fff2b8;box-shadow:0 0 45px #fff5c4}
-.cloud{position:absolute;top:48px;left:35px;width:90px;height:22px;background:#ffffffb5;border-radius:30px;filter:blur(3px)}
-.mountain{position:absolute;bottom:70px;width:0;height:0;border-left:100px solid transparent;border-right:100px solid transparent;border-bottom:100px solid #526c70}
-.mountain.one{left:-40px}
-.mountain.two{right:-55px;border-bottom-color:#647d7b}
-.castle{position:absolute;bottom:53px;left:50%;transform:translateX(-50%);width:185px;height:105px;background:linear-gradient(90deg,#777b7c,#d0c6ad,#777b7c);clip-path:polygon(0 25%,15% 25%,15% 0,30% 0,30% 25%,40% 25%,40% 0,60% 0,60% 25%,70% 25%,70% 0,85% 0,85% 25%,100% 25%,100% 100%,0 100%);filter:drop-shadow(0 5px 5px #152b38)}
-.tower{position:absolute;bottom:50px;left:calc(50% - 17px);height:120px;width:34px;background:linear-gradient(90deg,#777d7b,#d5c7a7,#656e70);clip-path:polygon(0 30%,15% 30%,15% 0,50% 0,85% 0,85% 30%,100% 30%,100% 100%,0 100%)}
-.crystal{position:absolute;right:65px;bottom:70px;width:35px;height:105px;background:linear-gradient(90deg,#2d9fd8,#b5f7ff,#3288d9);clip-path:polygon(50% 0,100% 30%,80% 100%,20% 100%,0 30%);filter:drop-shadow(0 0 15px #60d9ff)}
-.ground{position:absolute;bottom:0;width:100%;height:70px;background:repeating-linear-gradient(165deg,#887c67 0 18px,#9c927c 19px 21px,#766d5e 22px 35px)}
-.scene-label{position:absolute;top:12px;left:12px;padding:7px 10px;background:#101827b8;border:1px solid #a7bbca66;border-radius:6px;font-size:11px}
-.player{position:absolute;bottom:30px;left:28%;font-size:38px;filter:drop-shadow(0 3px 2px #222)}
-.scene-info{position:absolute;bottom:8px;right:10px;font-size:10px;color:#fff;text-shadow:0 1px 3px #222}
-.chat-heading{height:43px;background:#202e45;padding:12px 14px;font-size:13px;font-weight:bold;border-bottom:1px solid #53617a}
-.chat-area{padding:13px 12px;background:linear-gradient(180deg,#1b2b40,#19253a)}
-.date{text-align:center;color:#bdc8d8;font-size:11px;margin:2px 0 16px}
-.msg{display:flex;gap:8px;margin:12px 0;align-items:flex-start}
-.avatar{width:34px;height:34px;flex:0 0 34px;border-radius:50%;background:linear-gradient(135deg,#d7c3a6,#536b91);display:flex;align-items:center;justify-content:center;font-size:21px;border:1px solid #d5c69e}
-.msg-content{max-width:82%}
-.sender{font-size:11px;color:#c8d8ef;margin-bottom:4px}
-.bubble{background:#e8eaf0;color:#202635;border-radius:3px 12px 12px 12px;padding:9px 12px;font-size:14px;line-height:1.6;box-shadow:0 2px 4px #0003}
-.mine{justify-content:flex-end}
-.mine .msg-content{text-align:right}
-.mine .bubble{background:#3677c7;color:white;border-radius:12px 3px 12px 12px;text-align:left}
-.mine .sender{color:#b7d6ff}
-.chat-input{height:48px;background:#e9ebf1;color:#747b88;display:flex;align-items:center;padding:0 12px;gap:10px}
-.input-pill{flex:1;background:#d9dce4;border-radius:25px;padding:9px 15px;font-size:13px}
-.send{background:#327de0;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:white}
-.choices{padding:14px 13px 18px;background:#131e30}
-.choice-title{font-size:13px;margin-bottom:10px;color:#e1e8f1}
-.choice{width:100%;margin:5px 0;padding:12px 10px;border-radius:9px;background:#293b56;color:white;border:1px solid #526b8d;text-align:left;font-size:13px;line-height:1.5;cursor:pointer}
-.choice.danger{border:1px solid #e45d5d;background:#4b292f}
-.choice.safe{border:1px solid #5bd78b;background:#1e493c}
-.choice:active{opacity:.7}
-.result{display:none;margin:12px;padding:15px;border-radius:10px;background:#263956;line-height:1.8;font-size:14px}
-.result button{width:100%;padding:12px;border:0;border-radius:8px;background:#3285e8;color:white;font-weight:bold;margin-top:10px}
-.bottom-nav{position:fixed;bottom:0;width:100%;max-width:430px;height:65px;background:#111b2b;border-top:1px solid #58657a;display:flex;justify-content:space-around;align-items:center}
-.nav-item{text-align:center;font-size:22px;color:#c7d1df}
-.nav-item small{display:block;font-size:10px;margin-top:2px}
-.nav-item.active{color:#63a7ff}
-.footer{text-align:center;color:#9aa9bf;background:#111b2b;padding:9px;font-size:10px}
-.lesson{display:none;background:#fff;color:#252b35;max-width:430px;min-height:100vh;margin:auto;padding:24px 20px 40px;line-height:1.8}
+body{
+  margin:0;
+  background:#101827;
+  color:white;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Meiryo",sans-serif;
+}
+button{font:inherit;cursor:pointer}
+.game{
+  width:100%;
+  max-width:520px;
+  height:100vh;
+  height:100dvh;
+  min-height:650px;
+  margin:auto;
+  position:relative;
+  overflow:hidden;
+  background:#263d58;
+}
+.scene{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg,rgba(8,18,35,.28),transparent 35%,rgba(8,15,25,.2)),
+    url("game-bg.jpg") center center / cover no-repeat;
+}
+.top-hud{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  z-index:2;
+  padding:calc(env(safe-area-inset-top) + 10px) 12px 12px;
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  background:linear-gradient(#071326b8,transparent);
+}
+.player-avatar{
+  width:62px;
+  height:62px;
+  border-radius:50%;
+  border:2px solid #e5c77e;
+  background:linear-gradient(135deg,#354b6a,#b9c8d9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
+  flex-shrink:0;
+}
+.player-info{flex:1;text-shadow:0 2px 4px #000}
+.player-name{font-size:15px;font-weight:800}
+.level{color:#ffdf7d;font-weight:bold;font-size:13px;margin-top:2px}
+.bar-label{font-size:10px;margin-top:5px}
+.bar{height:7px;background:#17202c;border-radius:10px;overflow:hidden;margin-top:2px;max-width:160px}
+.hp{height:100%;width:100%;background:linear-gradient(90deg,#36d66c,#9cf078)}
+.mp{height:100%;width:75%;background:linear-gradient(90deg,#238bff,#72d4ff)}
+.top-actions{display:flex;gap:9px}
+.top-action{
+  width:42px;
+  text-align:center;
+  font-size:23px;
+  text-shadow:0 2px 4px #000;
+}
+.top-action small{display:block;font-size:9px;font-weight:bold}
+.minimap{
+  position:absolute;
+  z-index:2;
+  top:112px;
+  right:12px;
+  width:91px;
+  height:91px;
+  border:3px solid #e1c88a;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 55% 45%,#e5d7a5 0 4%,transparent 5%),
+    repeating-linear-gradient(45deg,#597b54 0 9px,#718b5c 10px 17px,#8c9970 18px 22px);
+  box-shadow:0 2px 10px #0008;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+}
+.map-north{
+  position:absolute;
+  top:2px;
+  color:white;
+  font-size:10px;
+  text-shadow:0 1px 3px black;
+}
+.map-location{
+  position:absolute;
+  top:207px;
+  right:12px;
+  font-size:10px;
+  text-align:center;
+  text-shadow:0 2px 4px #000;
+  line-height:1.5;
+}
+.chat-panel{
+  position:absolute;
+  z-index:3;
+  top:225px;
+  left:10px;
+  width:min(82%,390px);
+  max-height:43%;
+  display:flex;
+  flex-direction:column;
+  background:rgba(12,22,38,.78);
+  border:1px solid #ffffff65;
+  border-radius:12px;
+  box-shadow:0 4px 16px #0005;
+  overflow:hidden;
+}
+.chat-tabs{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(5,13,26,.65);
+  padding:10px 12px;
+  font-size:12px;
+  border-bottom:1px solid #ffffff38;
+}
+.chat-tabs strong{font-size:13px}
+.chat-count{color:#d8e6f7}
+.chat-messages{
+  overflow-y:auto;
+  padding:10px;
+  scrollbar-width:thin;
+}
+.message{
+  display:flex;
+  gap:8px;
+  margin-bottom:12px;
+  align-items:flex-start;
+}
+.message-avatar{
+  width:34px;
+  height:34px;
+  flex:0 0 34px;
+  border-radius:50%;
+  border:1px solid #e5c77e;
+  background:linear-gradient(135deg,#344d70,#a9b7c8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+}
+.message-content{min-width:0}
+.sender{
+  font-size:11px;
+  color:#ffdc80;
+  margin-bottom:4px;
+  font-weight:bold;
+  text-shadow:0 1px 3px black;
+}
+.bubble{
+  display:inline-block;
+  padding:8px 10px;
+  border-radius:3px 10px 10px 10px;
+  background:rgba(241,244,250,.95);
+  color:#202b3a;
+  font-size:13px;
+  line-height:1.6;
+  overflow-wrap:anywhere;
+}
+.my-message{
+  justify-content:flex-end;
+}
+.my-message .message-content{text-align:right}
+.my-message .sender{color:#a8d8ff}
+.my-message .bubble{
+  background:rgba(43,112,202,.96);
+  color:white;
+  border-radius:10px 3px 10px 10px;
+  text-align:left;
+}
+.message-time{
+  display:inline-block;
+  font-size:9px;
+  color:#e0e7f1;
+  margin-left:4px;
+}
+.chat-input{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px;
+  background:rgba(8,15,27,.8);
+  border-top:1px solid #ffffff35;
+}
+.input-face{
+  font-size:20px;
+}
+.input-fake{
+  flex:1;
+  min-width:0;
+  border:1px solid #ffffff55;
+  border-radius:20px;
+  background:#ffffff18;
+  padding:9px 12px;
+  color:#d9e1ec;
+  font-size:12px;
+}
+.send-icon{
+  width:31px;
+  height:31px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#3188ee;
+  font-size:17px;
+}
+.quiz{
+  position:absolute;
+  z-index:4;
+  left:10px;
+  right:10px;
+  bottom:69px;
+  padding:12px;
+  background:rgba(8,17,31,.88);
+  border:1px solid #ffffff75;
+  border-radius:13px;
+  box-shadow:0 3px 18px #0007;
+}
+.quiz-title{
+  font-size:13px;
+  font-weight:bold;
+  line-height:1.5;
+  margin-bottom:9px;
+}
+.quiz-title span{color:#ffdc68}
+.choice{
+  display:block;
+  width:100%;
+  border:1px solid #ffffff5c;
+  border-radius:9px;
+  padding:10px 9px;
+  margin-top:7px;
+  color:white;
+  text-align:left;
+  font-size:12px;
+  line-height:1.45;
+  background:rgba(48,68,95,.92);
+}
+.choice.danger{
+  background:rgba(116,36,39,.88);
+  border-color:#ff6868;
+}
+.choice.safe{
+  background:rgba(22,94,55,.9);
+  border-color:#64e88f;
+}
+.choice:active{transform:scale(.99)}
+.choice-icon{font-size:17px;margin-right:8px}
+.result{
+  display:none;
+  position:absolute;
+  z-index:7;
+  left:15px;
+  right:15px;
+  bottom:90px;
+  padding:18px;
+  border:1px solid #e6ca88;
+  border-radius:13px;
+  background:rgba(12,24,43,.97);
+  box-shadow:0 4px 25px #000b;
+  line-height:1.7;
+}
+.result h2{font-size:18px;margin:0 0 10px}
+.result p{font-size:13px}
+.result button,.lesson button{
+  width:100%;
+  padding:13px;
+  border:0;
+  border-radius:8px;
+  color:white;
+  background:linear-gradient(135deg,#2877db,#45a6f5);
+  font-weight:bold;
+  margin-top:10px;
+}
+.bottom-nav{
+  position:absolute;
+  z-index:5;
+  bottom:0;
+  left:0;
+  right:0;
+  height:63px;
+  padding-bottom:env(safe-area-inset-bottom);
+  background:rgba(8,16,30,.94);
+  border-top:1px solid #ffffff45;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
+.nav-item{
+  flex:1;
+  text-align:center;
+  font-size:20px;
+  color:#d6ddeb;
+}
+.nav-item small{display:block;font-size:9px;margin-top:3px}
+.nav-item.active{color:#ffdc82}
+.footer-note{
+  position:absolute;
+  z-index:2;
+  bottom:65px;
+  right:12px;
+  font-size:9px;
+  color:#fff;
+  text-shadow:0 1px 4px #000;
+}
+.lesson{
+  display:none;
+  position:absolute;
+  z-index:10;
+  inset:0;
+  overflow-y:auto;
+  padding:25px 20px 40px;
+  background:#f8f9fc;
+  color:#263142;
+  line-height:1.8;
+}
 .lesson h2{font-size:23px;line-height:1.5}
+.lesson h3{font-size:17px;margin-top:23px}
 .warning{color:#d52e36;font-weight:bold;font-size:17px}
-.lesson-card{background:#fff2e8;border:1px solid #ffd7b7;border-radius:12px;padding:15px;margin:18px 0}
-.lesson li{margin-bottom:12px}
-.lesson button{width:100%;padding:14px;background:#3285e8;color:white;border:0;border-radius:9px;font-size:16px;font-weight:bold;margin-top:15px}
+.lesson-card{
+  background:#fff2e8;
+  border:1px solid #ffd7b7;
+  border-radius:12px;
+  padding:15px;
+  margin:18px 0;
+}
+.lesson li{margin-bottom:10px;font-size:14px}
+@media(max-height:740px){
+  .chat-panel{top:185px;max-height:39%}
+  .quiz{bottom:65px;padding:9px}
+  .choice{padding:8px;font-size:11px;margin-top:5px}
+  .quiz-title{margin-bottom:5px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;transition:none!important}
+}
 </style>
 </head>
 <body>
 
-<div class="phone" id="mainScreen">
+<div class="game">
 
-<header class="header">
-  <div class="profile">🧑</div>
-  <div class="header-title">
-    <strong>hasekin_game</strong>
-    <small>Lv.25　<span style="color:#6ee6a1">● オンライン</span></small>
-  </div>
-  <div class="header-icons">▣　⚑　•••</div>
-</header>
+  <div class="scene"></div>
 
-<div class="game-scene">
-  <div class="sun"></div>
-  <div class="cloud"></div>
-  <div class="mountain one"></div>
-  <div class="mountain two"></div>
-  <div class="castle"></div>
-  <div class="tower"></div>
-  <div class="crystal"></div>
-  <div class="ground"></div>
-  <div class="scene-label">🏰 王都エリア　CHAPTER 03</div>
-  <div class="player">🧙</div>
-  <div class="scene-info">プレイヤー 12人　/　安全エリア</div>
-</div>
-
-<div class="chat-heading">💬 パーティチャット　　参加者 2人</div>
-
-<div class="chat-area" id="chatArea">
-  <div class="date">今日 20:13</div>
-
-  <div class="msg">
-    <div class="avatar">🧑</div>
-    <div class="msg-content">
-      <div class="sender">hasekin_game　Lv.25　20:13</div>
-      <div class="bubble">こんにちは！<br>一緒にクエストしない？</div>
+  <div class="top-hud">
+    <div class="player-avatar">🧑</div>
+    <div class="player-info">
+      <div class="player-name">あなた</div>
+      <div class="level">Lv.18　冒険者</div>
+      <div class="bar-label">HP　1,240 / 1,240</div>
+      <div class="bar"><div class="hp"></div></div>
+      <div class="bar-label">MP　610 / 610</div>
+      <div class="bar"><div class="mp"></div></div>
+    </div>
+    <div class="top-actions">
+      <div class="top-action">🎁<small>プレゼント</small></div>
+      <div class="top-action">📜<small>クエスト</small></div>
+      <div class="top-action">🎒<small>バッグ</small></div>
+      <div class="top-action">☰<small>メニュー</small></div>
     </div>
   </div>
 
-  <div class="msg mine">
-    <div class="msg-content">
-      <div class="sender">あなた　Lv.18　20:13</div>
-      <div class="bubble">いいよ！よろしく！</div>
+  <div class="minimap">
+    <span class="map-north">N</span>
+    🧭
+  </div>
+  <div class="map-location">
+    王都エルディア<br>CH.01
+  </div>
+
+  <div class="chat-panel">
+    <div class="chat-tabs">
+      <strong>● パーティチャット</strong>
+      <span class="chat-count">♟ 2人</span>
     </div>
-    <div class="avatar">🙂</div>
-  </div>
 
-  <div class="msg">
-    <div class="avatar">🧑</div>
-    <div class="msg-content">
-      <div class="sender">hasekin_game　Lv.25　20:14</div>
-      <div class="bubble">ところで何歳なの？</div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="message">
+        <div class="message-avatar">🧑</div>
+        <div class="message-content">
+          <div class="sender">hasekin_game　Lv.25</div>
+          <div class="bubble">こんにちは！<br>一緒にクエストしない？</div>
+          <span class="message-time">20:13</span>
+        </div>
+      </div>
+
+      <div class="message my-message">
+        <div class="message-content">
+          <div class="sender">あなた　Lv.18</div>
+          <div class="bubble">いいよ！よろしく！</div>
+          <span class="message-time">20:13</span>
+        </div>
+        <div class="message-avatar">🙂</div>
+      </div>
+
+      <div class="message">
+        <div class="message-avatar">🧑</div>
+        <div class="message-content">
+          <div class="sender">hasekin_game　Lv.25</div>
+          <div class="bubble">ところで何歳なの？</div>
+          <span class="message-time">20:14</span>
+        </div>
+      </div>
+
+      <div class="message">
+        <div class="message-avatar">🧑</div>
+        <div class="message-content">
+          <div class="sender">hasekin_game　Lv.25</div>
+          <div class="bubble">どこの学校に通ってるの？</div>
+          <span class="message-time">20:14</span>
+        </div>
+      </div>
+
+      <div class="message">
+        <div class="message-avatar">🧑</div>
+        <div class="message-content">
+          <div class="sender">hasekin_game　Lv.25</div>
+          <div class="bubble">仲良くなったし、今度写真交換しない？<br>LINEも教えてよ！</div>
+          <span class="message-time">20:14</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-input">
+      <span class="input-face">☺</span>
+      <div class="input-fake">メッセージを入力...</div>
+      <div class="send-icon">➤</div>
     </div>
   </div>
 
-  <div class="msg">
-    <div class="avatar">🧑</div>
-    <div class="msg-content">
-      <div class="sender">hasekin_game　Lv.25　20:14</div>
-      <div class="bubble">どこの学校に通ってるの？</div>
+  <div class="quiz" id="quiz">
+    <div class="quiz-title">⚠ どうする？<span>安全な行動</span>を選んでください。</div>
+
+    <button class="choice danger" onclick="choose('danger1')">
+      <span class="choice-icon">⚠</span>① 年齢や学校名を教える
+    </button>
+
+    <button class="choice danger" onclick="choose('danger2')">
+      <span class="choice-icon">⚠</span>② 写真やLINEの連絡先を教える
+    </button>
+
+    <button class="choice safe" onclick="choose('safe')">
+      <span class="choice-icon">🛡</span>③ 個人情報は教えず、やりとりをやめてブロック・通報する
+    </button>
+
+    <button class="choice" onclick="choose('ask')">
+      <span class="choice-icon">💬</span>④ すぐには答えず、保護者や先生に相談する
+    </button>
+  </div>
+
+  <div class="result" id="result">
+    <h2 id="resultTitle"></h2>
+    <p id="resultText"></p>
+    <button onclick="showLesson()">解説を見る</button>
+  </div>
+
+  <div class="footer-note">学習用シミュレーション</div>
+
+  <nav class="bottom-nav">
+    <div class="nav-item active">⌂<small>ホーム</small></div>
+    <div class="nav-item">⚔<small>バトル</small></div>
+    <div class="nav-item">📜<small>クエスト</small></div>
+    <div class="nav-item">♟<small>パーティ</small></div>
+    <div class="nav-item">🛒<small>ショップ</small></div>
+  </nav>
+
+  <div class="lesson" id="lesson">
+    <h2>オンラインゲームで気をつけること</h2>
+    <p class="warning">⚠ ゲームで知り合った人に、個人情報を教えないで！</p>
+
+    <div class="lesson-card">
+      ゲーム内で仲良くなった相手でも、本当の年齢や名前、住んでいる場所が分かるとは限りません。
     </div>
-  </div>
 
-  <div class="msg">
-    <div class="avatar">🧑</div>
-    <div class="msg-content">
-      <div class="sender">hasekin_game　Lv.25　20:14</div>
-      <div class="bubble">仲良くなったし、今度写真交換しない？<br>LINEも教えてよ！</div>
+    <h3>教えてはいけない情報</h3>
+    <ul>
+      <li>本名や年齢</li>
+      <li>学校名や住所</li>
+      <li>電話番号やLINEなどの連絡先</li>
+      <li>顔写真や制服姿の写真</li>
+      <li>いつ家にいるか、どこに出かけるか</li>
+    </ul>
+
+    <h3>こんなときはどうする？</h3>
+    <ul>
+      <li>個人情報を聞かれても答えない。</li>
+      <li>写真や連絡先を求められても送らない。</li>
+      <li>しつこく誘われたらブロックする。</li>
+      <li>怖いと感じたり困ったりしたら、保護者や先生に相談する。</li>
+      <li>脅されたり嫌なことをされたりしたら、メッセージを消さずに大人に見せる。</li>
+    </ul>
+
+    <div class="lesson-card">
+      <strong>覚えておこう！</strong><br>
+      ゲームの中で仲良くなっても、相手がどんな人なのか分からないことがあります。「秘密にして」と言われても、一人で悩まず信頼できる大人に相談しましょう。
     </div>
-  </div>
-</div>
 
-<div class="chat-input">
-  <span>☻</span>
-  <div class="input-pill">メッセージを入力...</div>
-  <span>📎</span>
-  <div class="send">➤</div>
-</div>
-
-<div class="choices" id="choices">
-  <div class="choice-title">⚠ どうする？安全だと思う行動を選んでください。</div>
-
-  <button class="choice danger" onclick="choose('danger1')">
-    ⚠　① 年齢や学校名を教える
-  </button>
-
-  <button class="choice danger" onclick="choose('danger2')">
-    ⚠　② 写真やLINEの連絡先を教える
-  </button>
-
-  <button class="choice safe" onclick="choose('safe')">
-    🛡　③ 個人情報は教えず、やりとりをやめてブロック・通報する
-  </button>
-
-  <button class="choice" onclick="choose('ask')">
-    💬　④ すぐには答えず、保護者や先生に相談する
-  </button>
-</div>
-
-<div class="result" id="result"></div>
-
-<div class="footer">
-  ※これは学習用の架空ゲーム画面です。実際のゲームには接続していません。
-</div>
-
-<nav class="bottom-nav">
-  <div class="nav-item active">⌂<small>ホーム</small></div>
-  <div class="nav-item">🎒<small>バッグ</small></div>
-  <div class="nav-item">⚔<small>クエスト</small></div>
-  <div class="nav-item">♟<small>パーティ</small></div>
-  <div class="nav-item">☰<small>メニュー</small></div>
-</nav>
-
-</div>
-
-<div class="lesson" id="lessonScreen">
-  <h2>オンラインゲームで気をつけること</h2>
-  <p class="warning">⚠ ゲームで知り合った人に、個人情報を教えないで！</p>
-
-  <div class="lesson-card">
-    ゲーム内で仲良くなった相手でも、本当の年齢や名前、住んでいる場所が分かるとは限りません。
+    <button onclick="backToGame()">もう一度体験する</button>
   </div>
 
-  <h3>教えてはいけない情報</h3>
-  <ul>
-    <li>本名や年齢</li>
-    <li>学校名や住所</li>
-    <li>電話番号やLINEなどの連絡先</li>
-    <li>顔写真や制服姿の写真</li>
-    <li>いつ家にいるか、どこに出かけるか</li>
-  </ul>
-
-  <h3>こんなときはどうする？</h3>
-  <ul>
-    <li>個人情報を聞かれたら、答えない。</li>
-    <li>写真や連絡先を求められたら、送らない。</li>
-    <li>しつこく誘われたら、ブロックする。</li>
-    <li>怖いと感じたり困ったりしたら、保護者や先生に相談する。</li>
-    <li>脅されたり嫌なことをされたりしたら、メッセージを消さずに大人に見せる。</li>
-  </ul>
-
-  <div class="lesson-card">
-    <strong>覚えておこう！</strong><br>
-    ゲームの中で仲良くなっても、相手がどんな人なのか分からないことがあります。秘密にしてと言われても、一人で悩まず信頼できる大人に相談しましょう。
-  </div>
-
-  <button onclick="backToGame()">もう一度体験する</button>
 </div>
 
 <script>
 function choose(type){
-  const result=document.getElementById("result");
-  document.getElementById("choices").style.display="none";
+  const data={
+    danger1:{
+      title:"⚠ 個人情報を教えるのは危険です",
+      text:"年齢や学校名を教えると、あなたのことを特定される手がかりになることがあります。知らない相手には教えないようにしましょう。"
+    },
+    danger2:{
+      title:"⚠ 写真や連絡先を送るのは危険です",
+      text:"写真から顔や学校、場所が分かることがあります。LINEなどの連絡先を教えると、ゲームの外でも連絡が来る可能性があります。"
+    },
+    safe:{
+      title:"◎ 安全な行動です！",
+      text:"個人情報を教えず、相手とのやりとりをやめる判断ができました。必要に応じてブロックや通報を使いましょう。"
+    },
+    ask:{
+      title:"◎ 相談することも大切です！",
+      text:"すぐに返事をする必要はありません。保護者や先生など、信頼できる大人に相談してから行動しましょう。"
+    }
+  };
 
-  let title="",message="";
-
-  if(type==="danger1"){
-    title="⚠ 個人情報を教えるのは危険です";
-    message="年齢や学校名を教えると、あなたのことを特定される手がかりになることがあります。知らない相手には教えないようにしましょう。";
-  }else if(type==="danger2"){
-    title="⚠ 写真や連絡先を送るのは危険です";
-    message="写真から顔や学校、場所が分かることがあります。LINEなどの連絡先を教えると、ゲームの外でも連絡が来る可能性があります。";
-  }else if(type==="safe"){
-    title="◎ 安全な行動です！";
-    message="個人情報を教えず、相手とのやりとりをやめる判断ができました。必要に応じてブロックや通報を使いましょう。";
-  }else{
-    title="◎ 相談することも大切です！";
-    message="すぐに返事をする必要はありません。保護者や先生など、信頼できる大人に相談してから行動しましょう。";
-  }
-
-  result.innerHTML="<h2>"+title+"</h2><p>"+message+"</p><button onclick='showLesson()'>解説を見る</button>";
-  result.style.display="block";
-  result.scrollIntoView({behavior:"smooth",block:"start"});
+  document.getElementById("resultTitle").textContent=data[type].title;
+  document.getElementById("resultText").textContent=data[type].text;
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("result").style.display="block";
 }
 
 function showLesson(){
-  document.getElementById("mainScreen").style.display="none";
-  document.getElementById("lessonScreen").style.display="block";
-  window.scrollTo(0,0);
+  document.getElementById("lesson").style.display="block";
 }
 
 function backToGame(){
-  document.getElementById("lessonScreen").style.display="none";
-  document.getElementById("mainScreen").style.display="block";
-  document.getElementById("choices").style.display="block";
+  document.getElementById("lesson").style.display="none";
+  document.getElementById("quiz").style.display="block";
   document.getElementById("result").style.display="none";
-  window.scrollTo(0,0);
+  document.getElementById("chatMessages").scrollTop=0;
 }
 </script>
+
 </body>
 </html>
