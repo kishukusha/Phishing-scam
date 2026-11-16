@@ -1,0 +1,760 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報モラル総合チャレンジ</title>
+<style>
+:root {
+  --bg:#e9eef5;
+  --navy:#17283d;
+  --blue:#0878d1;
+  --green:#20a875;
+  --red:#d95365;
+  --text:#202c3a;
+  --muted:#718096;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+.app {
+  width:min(100%,620px);
+  margin:auto;
+  min-height:100vh;
+  background:#f4f6f9;
+  box-shadow:0 0 25px #0002;
+}
+header {
+  background:#17283d;
+  color:white;
+  padding:18px 16px 14px;
+  text-align:center;
+}
+.eyebrow {
+  font-size:11px;
+  letter-spacing:3px;
+  color:#9bcaff;
+}
+h1 {
+  font-size:25px;
+  margin:7px 0 3px;
+}
+.subtitle {font-size:12px;color:#bdcadd}
+.status {
+  display:flex;
+  justify-content:space-between;
+  padding:11px 15px;
+  background:white;
+  font-size:12px;
+  font-weight:bold;
+}
+.progress {
+  height:5px;
+  background:#dce4ed;
+}
+.progress-fill {
+  height:100%;
+  width:0;
+  background:#1689df;
+  transition:width .3s;
+}
+.screen {padding:15px}
+.panel {
+  background:white;
+  border-radius:15px;
+  padding:19px;
+  box-shadow:0 3px 12px #1b304510;
+  margin-bottom:14px;
+}
+h2 {font-size:20px;margin:8px 0 13px}
+p {line-height:1.8}
+.tag {
+  color:#0878d1;
+  font-size:11px;
+  font-weight:bold;
+  letter-spacing:1px;
+}
+.muted {color:var(--muted);font-size:13px}
+.notice {
+  background:#fff7e5;
+  border-left:4px solid #e6a832;
+  padding:12px;
+  border-radius:7px;
+  font-size:13px;
+  line-height:1.8;
+  margin:14px 0;
+}
+.main-btn {
+  width:100%;
+  border:0;
+  border-radius:10px;
+  background:#0878d1;
+  color:white;
+  padding:15px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:13px;
+}
+.hidden {display:none!important}
+
+/* チャット画面 */
+.chat-window {
+  background:#dce7ef;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid #cbd7e2;
+}
+.chat-header {
+  background:#fff;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 14px;
+  border-bottom:1px solid #e3e8ee;
+}
+.avatar {
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:white;
+  font-weight:bold;
+  font-size:18px;
+  background:linear-gradient(135deg,#6e9cc9,#315b87);
+  flex-shrink:0;
+}
+.avatar.friend {background:linear-gradient(135deg,#db9eaf,#a54e70)}
+.avatar.system {background:linear-gradient(135deg,#8a9aab,#46576a)}
+.person-name {font-weight:bold;font-size:14px}
+.person-status {font-size:11px;color:#8492a2;margin-top:3px}
+.chat-body {
+  padding:15px 11px;
+  min-height:220px;
+}
+.day-label {
+  text-align:center;
+  font-size:10px;
+  color:#68798a;
+  margin:3px 0 15px;
+}
+.message-row {
+  display:flex;
+  align-items:flex-end;
+  gap:7px;
+  margin:12px 0;
+}
+.message-row.me {
+  justify-content:flex-end;
+}
+.message-avatar {
+  width:27px;
+  height:27px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:white;
+  background:#6388ad;
+  font-size:11px;
+  flex-shrink:0;
+}
+.message-avatar.friend {background:#bb7189}
+.message-content {max-width:82%}
+.sender {
+  font-size:10px;
+  color:#637386;
+  margin:0 0 4px 3px;
+}
+.bubble {
+  background:white;
+  border-radius:4px 14px 14px 14px;
+  padding:11px 13px;
+  font-size:14px;
+  line-height:1.75;
+  box-shadow:0 1px 2px #0001;
+  overflow-wrap:anywhere;
+}
+.me .bubble {
+  background:#9ee5a8;
+  border-radius:14px 4px 14px 14px;
+}
+.time {
+  font-size:9px;
+  color:#748394;
+  margin:0 3px;
+  white-space:nowrap;
+}
+.system-message {
+  text-align:center;
+  color:#64758a;
+  font-size:11px;
+  margin:15px 0;
+}
+.chat-image {
+  background:#f6f8fb;
+  border:1px solid #dbe2e9;
+  border-radius:10px;
+  padding:12px;
+  margin:8px 0;
+  font-size:12px;
+  line-height:1.8;
+}
+.chat-image strong {color:#334b65}
+.url {
+  background:#f1f5fa;
+  border:1px solid #d7e1ed;
+  border-radius:7px;
+  padding:10px;
+  color:#0878d1;
+  overflow-wrap:anywhere;
+  margin-top:8px;
+  font-size:12px;
+}
+.question-box {
+  background:#fff;
+  border-top:1px solid #d8e1e9;
+  padding:14px 12px 15px;
+}
+.question-title {
+  font-size:13px;
+  font-weight:bold;
+  margin:0 0 11px;
+  color:#263b51;
+}
+.reply-list {
+  display:grid;
+  gap:9px;
+}
+.reply {
+  width:100%;
+  border:1px solid #cbd7e3;
+  border-radius:12px;
+  background:white;
+  color:#26394c;
+  text-align:left;
+  padding:12px 13px;
+  font-size:13px;
+  line-height:1.65;
+  cursor:pointer;
+  display:flex;
+  align-items:flex-start;
+  gap:9px;
+  transition:.15s;
+}
+.reply:hover {
+  background:#edf6ff;
+  border-color:#5a9dd8;
+}
+.reply-number {
+  color:#0878d1;
+  font-weight:bold;
+  flex-shrink:0;
+}
+.reply:disabled {cursor:default}
+.reply.correct {
+  background:#e0f6e9;
+  border-color:#36a975;
+}
+.reply.wrong {
+  background:#fce8eb;
+  border-color:#d95365;
+}
+.reply:focus-visible {
+  outline:3px solid #0878d1;
+  outline-offset:2px;
+}
+.feedback {
+  display:none;
+  margin-top:14px;
+  border-radius:10px;
+  padding:13px;
+  font-size:13px;
+  line-height:1.8;
+}
+.feedback.good {
+  display:block;
+  background:#e1f5e9;
+  border:1px solid #9ad5b2;
+}
+.feedback.bad {
+  display:block;
+  background:#fff0f0;
+  border:1px solid #e7a4ac;
+}
+.feedback strong {
+  display:block;
+  font-size:15px;
+  margin-bottom:5px;
+}
+.feedback .explain {
+  margin-top:7px;
+}
+.result-score {
+  text-align:center;
+  font-size:45px;
+  font-weight:bold;
+  color:#0878d1;
+  margin:18px 0;
+}
+.rank {
+  text-align:center;
+  font-weight:bold;
+  font-size:20px;
+}
+.lesson {
+  background:#f0f5fa;
+  border-radius:10px;
+  padding:13px;
+  margin:10px 0;
+  font-size:13px;
+  line-height:1.8;
+}
+.lesson strong {color:#175b91}
+footer {
+  text-align:center;
+  color:#8391a0;
+  font-size:10px;
+  padding:18px;
+  line-height:1.8;
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<header>
+  <div class="eyebrow">INFORMATION LITERACY</div>
+  <h1>FINAL MISSION</h1>
+  <div class="subtitle">情報モラル総合チャレンジ・上級編</div>
+</header>
+
+<div class="status">
+  <span id="stageText">MISSION 0 / 5</span>
+  <span id="scoreText">ポイント 0 / 100</span>
+</div>
+<div class="progress">
+  <div class="progress-fill" id="progressFill"></div>
+</div>
+
+<div class="screen">
+
+<section class="panel" id="intro">
+  <div class="tag">FINAL STAGE / ADVANCED</div>
+  <h2>この相手を信用して大丈夫？</h2>
+  <p>
+    SNSで知り合った相手から、突然メッセージが届きました。
+    相手は親切で、共通の友達もいるようです。
+  </p>
+  <p>
+    しかし、会話を続けるうちに、少しずつ不自然な点が見えてきます。
+  </p>
+  <div class="notice">
+    今回は、実際のメッセージ画面を見ながら判断します。<br>
+    相手の言葉だけでなく、プロフィールやURL、友達からの情報も確認してください。
+  </div>
+  <p class="muted">全5ステージ。各ステージ20ポイントです。</p>
+  <button class="main-btn" onclick="startMission()">メッセージを開く</button>
+</section>
+
+<section class="panel hidden" id="mission">
+  <div class="tag" id="stepLabel">STAGE 1</div>
+  <h2 id="stageTitle"></h2>
+
+  <div class="chat-window">
+    <div class="chat-header">
+      <div class="avatar" id="headerAvatar">K</div>
+      <div>
+        <div class="person-name" id="headerName">kaito_2026</div>
+        <div class="person-status" id="headerStatus">オンライン</div>
+      </div>
+    </div>
+
+    <div class="chat-body" id="chatBody"></div>
+
+    <div class="question-box">
+      <div class="question-title" id="questionTitle">
+        あなたなら、どう返信しますか？
+      </div>
+      <div class="reply-list" id="choices"></div>
+      <div class="feedback" id="feedback" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <button class="main-btn hidden" id="nextBtn" onclick="nextStage()">次のメッセージへ</button>
+</section>
+
+<section class="panel hidden" id="result">
+  <div class="tag">MISSION COMPLETE</div>
+  <h2>総合判定</h2>
+  <div class="result-score" id="finalScore">0 / 100</div>
+  <div class="rank" id="rank"></div>
+  <p id="resultMessage" style="text-align:center"></p>
+
+  <h2 style="margin-top:25px">今回の重要ポイント</h2>
+
+  <div class="lesson">
+    <strong>1. 相手のプロフィールだけで信用しない</strong><br>
+    写真や自己紹介、共通の友達がいることは、本人確認の証拠にはなりません。
+  </div>
+  <div class="lesson">
+    <strong>2. URLは文字列をよく確認する</strong><br>
+    有名なサービスに似た名前でも、別のサイトである可能性があります。
+  </div>
+  <div class="lesson">
+    <strong>3. 急がせる相手には注意する</strong><br>
+    「今すぐ」「秘密にして」「誰にも言わないで」という言葉には注意しましょう。
+  </div>
+  <div class="lesson">
+    <strong>4. 個人情報は簡単に送らない</strong><br>
+    学校名、住所、電話番号、写真、位置情報などは大切な個人情報です。
+  </div>
+  <div class="lesson">
+    <strong>5. 迷ったら一人で判断しない</strong><br>
+    返信やリンクを開く前に、信頼できる大人や先生に相談しましょう。
+  </div>
+
+  <div class="notice">
+    この教材は学習用のシミュレーションです。実際のSNSへの接続、個人情報の入力・収集・送信は行っていません。
+  </div>
+  <button class="main-btn" onclick="restartMission()">もう一度チャレンジする</button>
+</section>
+
+</div>
+
+<footer>
+  情報モラル学習教材 / FINAL MISSION<br>
+  登場人物・サービスはすべて架空です。
+</footer>
+</div>
+
+<script>
+const stages = [
+{
+ title:"知らない相手からのメッセージ",
+ name:"kaito_2026",
+ avatar:"K",
+ status:"オンライン",
+ messages:[
+  {from:"other",text:"こんにちは！突然ごめんね。○○さんの友達から紹介してもらったよ！"},
+  {from:"other",text:"同じ地域に住んでいるみたいだね。今度一緒にゲームしない？"},
+  {from:"other",text:"ところで、君の学校ってどこ？近かったら会えるかも！"}
+ ],
+ question:"相手から学校名を聞かれました。あなたなら、どう返信しますか？",
+ choices:[
+  "仲良くなりたいので、学校名を教える",
+  "学校名は教えず、相手が誰なのか確認する",
+  "相手も地域を知っているので、住所も教える",
+  "共通の友達がいるなら、個人情報を教えても問題ない"
+ ],
+ answer:1,
+ reaction:"そうなんだ！学校名は教えてくれないんだね。ちょっと残念だな。",
+ explanation:"学校名は、住んでいる地域や行動範囲を特定する手がかりになります。相手の説明だけで信用せず、本人確認ができるまでは個人情報を伝えないことが大切です。"
+},
+{
+ title:"プロフィールを確認する",
+ name:"kaito_2026",
+ avatar:"K",
+ status:"プロフィール情報",
+ messages:[
+  {from:"other",text:"そういえば、ぼくのプロフィール見た？"},
+  {from:"other",text:"写真も載せているし、友達もいるから安心してね！"},
+  {from:"other",text:"共通の友達もいるでしょ？"}
+ ],
+ extra:`
+ <div class="chat-image">
+  <strong>プロフィール情報</strong><br>
+  アカウント名：kaito_2026<br>
+  フォロワー：12人<br>
+  投稿：1件<br>
+  アカウント作成：最近<br>
+  共通の友達：1人<br>
+  自己紹介：「友達たくさん！」
+ </div>`,
+ question:"プロフィールを確認しました。次にどうするのが適切ですか？",
+ choices:[
+  "写真があるので本人のアカウントだと判断する",
+  "共通の友達がいるので安全だと判断する",
+  "情報が少ないため、本人確認ができるまでは慎重に対応する",
+  "フォロワーが少ない人は全員危険なので、必ず通報する"
+ ],
+ answer:2,
+ reaction:"えー、まだ信用してくれないの？ぼくは普通の人だよ！",
+ explanation:"プロフィール写真や共通の友達だけでは、本人であることや安全性は確認できません。情報が少ないことは注意するきっかけになりますが、それだけで犯罪者と決めつけることもできません。"
+},
+{
+ title:"不審なリンクが届く",
+ name:"kaito_2026",
+ avatar:"K",
+ status:"メッセージが届きました",
+ messages:[
+  {from:"other",text:"そうだ！ゲームの限定アイテムが無料でもらえるよ！"},
+  {from:"other",text:"このサイトから登録するだけでOK！"},
+  {from:"other",text:"公式と同じような画面だから大丈夫！早くしないと終了するよ。"}
+ ],
+ extra:`
+ <div class="chat-image">
+  <strong>送られてきたリンク</strong>
+  <div class="url">https://game-present.example.invalid/login</div>
+  <span style="color:#78899b">※架空のURLです。実際にはアクセスできません。</span>
+ </div>`,
+ question:"無料アイテムをもらうために、ログインをすすめられました。どうしますか？",
+ choices:[
+  "HTTPSなので安全だと判断して開く",
+  "ゲームのIDとパスワードを入力する",
+  "公式サイトに似ていれば問題ないので開く",
+  "リンクを開かず、公式アプリや公式サイトから情報を確認する"
+ ],
+ answer:3,
+ reaction:"えっ、登録しないの？今だけ無料なのに！早くしてよ！",
+ explanation:"HTTPSは通信を暗号化する仕組みであり、サイト運営者が信頼できることを保証するものではありません。URLの見た目だけで判断せず、公式アプリや自分で確認した公式サイトから情報を確認しましょう。"
+},
+{
+ title:"友達からの連絡",
+ name:"mika（友達）",
+ avatar:"M",
+ status:"友達からメッセージ",
+ friend:true,
+ messages:[
+  {from:"other",text:"ちょっと聞いて！私の名前を使った別のアカウントから連絡が来たよ。"},
+  {from:"other",text:"その人、私の写真を使っているけど、私が作ったアカウントじゃないよ。"},
+  {from:"other",text:"もしかして、kaito_2026っていう人から連絡来てない？"}
+ ],
+ extra:`
+ <div class="chat-image">
+  <strong>ここまでに分かったこと</strong><br>
+  ・相手のアカウントは作成されたばかり<br>
+  ・プロフィールの情報が少ない<br>
+  ・外部サイトへの登録をすすめてきた<br>
+  ・友達の名前や写真を使っている可能性がある
+ </div>`,
+ question:"友達の名前や写真を使った偽アカウントの可能性が出てきました。どうしますか？",
+ choices:[
+  "相手に自分の住所を教えて、本当に知り合いか確認する",
+  "友達本人に別の方法で確認し、偽アカウントを運営会社に報告する",
+  "相手を問い詰めるため、個人情報を聞き出す",
+  "友達の写真を保存して、自分のSNSにも投稿する"
+ ],
+ answer:1,
+ reaction:"ありがとう！本当に私じゃないから、気をつけてね。",
+ explanation:"本人のアカウントとは別の連絡手段で確認することが重要です。偽アカウントの可能性があれば、やり取りを続けず、証拠を残したうえでサービス運営会社に報告しましょう。必要に応じて先生や保護者にも相談します。"
+},
+{
+ title:"最終判断",
+ name:"kaito_2026",
+ avatar:"K",
+ status:"最後のメッセージ",
+ messages:[
+  {from:"other",text:"ねえ、どうして返事をくれないの？"},
+  {from:"other",text:"ぼくのことを信じてよ。ゲームの登録もまだだよね？"},
+  {from:"other",text:"今すぐ登録して！このことは誰にも言わないでね。"},
+  {from:"other",text:"君の学校のことも知りたいし、もっと仲良くなりたいんだ。"}
+ ],
+ extra:`
+ <div class="chat-image">
+  <strong>これまでに確認した情報</strong><br>
+  ・アカウント作成が最近<br>
+  ・プロフィール情報が少ない<br>
+  ・学校名を聞いてきた<br>
+  ・外部サイトでログインを要求<br>
+  ・友達の写真を無断使用している可能性<br>
+  ・「今すぐ」「誰にも言わないで」と急がせている
+ </div>`,
+ question:"これまでの情報をすべて確認しました。あなたなら、どう対応しますか？",
+ choices:[
+  "相手に本当の名前と学校名を伝え、本人かどうか質問する",
+  "リンク先でログインして、相手が本物かどうか確かめる",
+  "相手に返信せず、リンクを開かない。記録を残し、友達本人に別の方法で確認して、運営会社や先生・保護者に相談する",
+  "相手のアカウントを自分のSNSで公開し、みんなに注意を呼びかける"
+ ],
+ answer:2,
+ reaction:"既読になったまま、相手からの返信はありません。",
+ explanation:"複数の危険サインが重なっています。個人情報を渡さない、リンクを開かない、相手とやり取りを続けないことが重要です。画面の記録などを残し、友達本人に別の方法で確認します。偽アカウントの可能性は運営会社に報告し、先生や保護者にも相談しましょう。相手を自分で問い詰めたり、個人情報を公開したりすることは避けてください。"
+}
+];
+
+let currentStage=0;
+let score=0;
+let answered=false;
+
+function addMessage(body,from,text) {
+ const row=document.createElement("div");
+ row.className="message-row "+(from==="me"?"me":"");
+ const avatar=document.createElement("div");
+ avatar.className="message-avatar "+(from==="friend"?"friend":"");
+ avatar.textContent=from==="friend"?"M":from==="me"?"自":"相";
+ const content=document.createElement("div");
+ content.className="message-content";
+ const sender=document.createElement("div");
+ sender.className="sender";
+ sender.textContent=from==="me"?"あなた":from==="friend"?"mika（友達）":"相手";
+ const bubble=document.createElement("div");
+ bubble.className="bubble";
+ bubble.textContent=text;
+ content.append(sender,bubble);
+ const time=document.createElement("div");
+ time.className="time";
+ time.textContent=" ";
+ if(from==="me") {
+  row.append(content,time);
+ } else {
+  row.append(avatar,content,time);
+ }
+ body.appendChild(row);
+}
+
+function startMission() {
+ document.getElementById("intro").classList.add("hidden");
+ document.getElementById("mission").classList.remove("hidden");
+ currentStage=0;
+ score=0;
+ renderStage();
+}
+
+function renderStage() {
+ answered=false;
+ const s=stages[currentStage];
+ document.getElementById("stageText").textContent=`MISSION ${currentStage+1} / 5`;
+ document.getElementById("scoreText").textContent=`ポイント ${score} / 100`;
+ document.getElementById("progressFill").style.width=`${currentStage*20}%`;
+ document.getElementById("stepLabel").textContent=`STAGE ${currentStage+1} / 5`;
+ document.getElementById("stageTitle").textContent=s.title;
+ document.getElementById("headerName").textContent=s.name;
+ document.getElementById("headerAvatar").textContent=s.avatar;
+ document.getElementById("headerAvatar").className="avatar"+(s.friend?" friend":"");
+ document.getElementById("headerStatus").textContent=s.status;
+ document.getElementById("questionTitle").textContent=s.question;
+
+ const body=document.getElementById("chatBody");
+ body.innerHTML="";
+ const day=document.createElement("div");
+ day.className="day-label";
+ day.textContent="今日";
+ body.appendChild(day);
+
+ s.messages.forEach(m=>{
+  addMessage(body,m.from==="friend"?"friend":"other",m.text);
+ });
+
+ if(s.extra) {
+  const extra=document.createElement("div");
+  extra.innerHTML=s.extra;
+  body.appendChild(extra);
+ }
+
+ const choices=document.getElementById("choices");
+ choices.innerHTML="";
+ s.choices.forEach((choice,i)=>{
+  const button=document.createElement("button");
+  button.className="reply";
+  const number=document.createElement("span");
+  number.className="reply-number";
+  number.textContent=["①","②","③","④"][i];
+  const label=document.createElement("span");
+  label.textContent=choice;
+  button.append(number,label);
+  button.onclick=()=>chooseAnswer(i);
+  choices.appendChild(button);
+ });
+
+ const feedback=document.getElementById("feedback");
+ feedback.className="feedback";
+ feedback.innerHTML="";
+ document.getElementById("nextBtn").classList.add("hidden");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function chooseAnswer(index) {
+ if(answered)return;
+ answered=true;
+ const s=stages[currentStage];
+ const correct=index===s.answer;
+ const buttons=document.querySelectorAll(".reply");
+
+ buttons.forEach((button,i)=>{
+  button.disabled=true;
+  if(i===s.answer)button.classList.add("correct");
+  if(i===index&&!correct)button.classList.add("wrong");
+ });
+
+ if(correct)score+=20;
+
+ const body=document.getElementById("chatBody");
+ addMessage(body,"me",s.choices[index]);
+
+ const reaction=document.createElement("div");
+ reaction.className="system-message";
+ reaction.textContent="メッセージを確認しました";
+ body.appendChild(reaction);
+
+ addMessage(body,s.friend?"friend":"other",s.reaction);
+
+ const feedback=document.getElementById("feedback");
+ feedback.className="feedback "+(correct?"good":"bad");
+ feedback.innerHTML=`
+  <strong>${correct?"正解！ 20ポイント獲得":"残念。不正解です"}</strong>
+  <div class="explain">${s.explanation}</div>
+ `;
+ document.getElementById("scoreText").textContent=`ポイント ${score} / 100`;
+ document.getElementById("nextBtn").textContent=
+  currentStage===stages.length-1?"最終結果を見る":"次のメッセージへ";
+ document.getElementById("nextBtn").classList.remove("hidden");
+ window.setTimeout(()=>{
+  document.getElementById("nextBtn").scrollIntoView({behavior:"smooth",block:"center"});
+ },100);
+}
+
+function nextStage() {
+ if(!answered)return;
+ currentStage++;
+ if(currentStage>=stages.length) {
+  showResult();
+ } else {
+  renderStage();
+ }
+}
+
+function showResult() {
+ document.getElementById("mission").classList.add("hidden");
+ document.getElementById("result").classList.remove("hidden");
+ document.getElementById("progressFill").style.width="100%";
+ document.getElementById("finalScore").textContent=`${score} / 100`;
+
+ let rank,message;
+ if(score===100) {
+  rank="情報モラルマスター";
+  message="すべての危険サインを見抜くことができました。素晴らしい判断力です！";
+ } else if(score>=80) {
+  rank="上級セキュリティレベル";
+  message="かなり高い判断力です。複数の情報を組み合わせて考えられています。";
+ } else if(score>=60) {
+  rank="もう一歩！";
+  message="基本的な判断はできています。見落とした危険サインを確認しましょう。";
+ } else if(score>=40) {
+  rank="注意が必要";
+  message="ネット上では、見た目や相手の説明だけで信用しないことが大切です。";
+ } else {
+  rank="再チャレンジ";
+  message="解説をよく読んで、もう一度挑戦してみましょう。正しい知識が自分を守ります。";
+ }
+ document.getElementById("rank").textContent=rank;
+ document.getElementById("resultMessage").textContent=message;
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function restartMission() {
+ document.getElementById("result").classList.add("hidden");
+ document.getElementById("mission").classList.remove("hidden");
+ currentStage=0;
+ score=0;
+ renderStage();
+}
+</script>
+</body>
+</html>
